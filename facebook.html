@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facebook Manager - My Rp AI Office</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#eef2ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#17213a;border-bottom:1px solid #34415e}
+h1{color:#8b9cff;font-size:23px;margin:0}
+header p{color:#aab6d0}
+main{padding:16px;max-width:750px;margin:auto}
+.card{background:#171f35;border:1px solid #34415e;border-radius:14px;padding:17px;margin-bottom:16px}
+h2{font-size:18px}
+label{display:block;margin:13px 0 7px;color:#b9c5df}
+input,textarea{width:100%;padding:13px;background:#0b1429;color:white;border:1px solid #405071;border-radius:9px;font:inherit}
+textarea{min-height:130px;resize:vertical}
+button{border:0;border-radius:9px;padding:13px;background:#687cff;color:white;font-weight:bold;cursor:pointer}
+button.secondary{background:#34415e}
+button.danger{background:#9c4050}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.preview{background:#fff;color:#202124;padding:15px;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}
+.status{color:#58dda1;font-size:13px}
+.post{padding:13px;border-bottom:1px solid #34415e;overflow-wrap:anywhere}
+small{color:#aab6d0}
+a{color:#9eafff}
+</style>
+</head>
+<body>
+<header>
+<h1>📱 Facebook Manager</h1>
+<p>My Rp AI Office — Social Media Department</p>
+<a href="index.html">← Back to AI Office</a>
+</header>
+<main>
+<div class="card">
+<h2>📊 Department Dashboard</h2>
+<p>Saved Drafts: <strong id="total">0</strong></p>
+<p class="status">● Workspace Online</p>
+</div>
+
+<div class="card">
+<h2>✍️ Create Facebook Post</h2>
+<label>Post Title</label>
+<input id="title" placeholder="Enter post title">
+
+<label>Post Caption</label>
+<textarea id="caption" placeholder="Write your Facebook caption here..."></textarea>
+
+<label>Image URL (optional)</label>
+<input id="photo" placeholder="https://example.com/image.jpg">
+
+<div class="actions">
+<button onclick="previewPost()">Preview Post</button>
+<button onclick="savePost()">Save Draft</button>
+</div>
+</div>
+
+<div class="card">
+<h2>👁️ Post Preview</h2>
+<div class="preview" id="preview">Your Facebook post preview will appear here.</div>
+</div>
+
+<div class="card">
+<h2>📋 Draft Manager</h2>
+<div id="drafts"><small>No saved drafts yet.</small></div>
+</div>
+
+<div class="card">
+<h2>🤖 AI Employee Status</h2>
+<p>Facebook Manager: <span class="status">Online</span></p>
+<p>Caption Generator: <small>Not connected yet</small></p>
+<p>Facebook Publishing: <small>Not connected yet</small></p>
+</div>
+
+<div class="card">
+<h2>🔒 Security Notice</h2>
+<small>This workspace currently saves drafts in this browser only. It does not publish to Facebook or connect to your Facebook account. Never enter your password or access token here.</small>
+</div>
+</main>
+<script>
+let drafts=JSON.parse(localStorage.getItem('rpDrafts')||'[]');
+function update(){
+document.getElementById('total').textContent=drafts.length;
+let box=document.getElementById('drafts');
+box.innerHTML='';
+if(!drafts.length){box.innerHTML='<small>No saved drafts yet.</small>';return;}
+drafts.forEach((p,i)=>{
+let div=document.createElement('div');
+div.className='post';
+let heading=document.createElement('strong');
+heading.textContent=p.title||'Untitled post';
+let body=document.createElement('p');
+body.textContent=p.caption;
+let date=document.createElement('small');
+date.textContent='Saved: '+p.date;
+let load=document.createElement('button');
+load.className='secondary';
+load.textContent='Edit';
+load.onclick=()=>{title.value=p.title;caption.value=p.caption;photo.value=p.photo;previewPost();};
+let del=document.createElement('button');
+del.className='danger';
+del.textContent='Delete';
+del.onclick=()=>{drafts.splice(i,1);save();};
+div.append(heading,body,date,document.createElement('br'),load,del);
+box.append(div);
+});
+}
+function previewPost(){
+let t=document.getElementById('title').value;
+let c=document.getElementById('caption').value;
+document.getElementById('preview').textContent=(t?t+'\n\n':'')+(c||'Your caption will appear here.');
+}
+function savePost(){
+let t=document.getElementById('title').value.trim();
+let c=document.getElementById('caption').value.trim();
+if(!c){alert('Please enter a caption first.');return;}
+drafts.unshift({title:t,caption:c,photo:document.getElementById('photo').value,date:new Date().toLocaleString()});
+save();
+alert('Facebook draft saved!');
+}
+function save(){
+localStorage.setItem('rpDrafts',JSON.stringify(drafts));
+update();
+}
+update();
+</script>
+</body>
+  </html>
+                                                        
