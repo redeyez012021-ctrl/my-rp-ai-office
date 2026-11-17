@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Rp AI Office</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#eef2ff;font-family:Arial,sans-serif}
+header{padding:20px;background:#141c31;border-bottom:1px solid #29334c}
+header h1{margin:0;color:#8b9cff;font-size:23px}
+header p{color:#9ca9c5;font-size:13px}
+main{padding:16px;max-width:1100px;margin:auto}
+h2{font-size:19px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:#171f35;border:1px solid #293653;border-radius:13px;padding:16px;margin-bottom:12px}
+.number{font-size:27px;color:#8b9cff;font-weight:bold}
+small{color:#a8b3ca}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.employee{text-align:center}
+.avatar{font-size:34px}
+.employee h3{font-size:14px;margin:8px 0 4px}
+.status{color:#58dda1;font-size:12px}
+button{background:#687cff;color:white;border:0;border-radius:9px;padding:12px;font-weight:bold;cursor:pointer}
+button:active{opacity:.7}
+input{background:#0d1528;color:white;border:1px solid #34415e;border-radius:9px;padding:13px;width:100%;margin:8px 0}
+.chat{background:#0d1528;border-radius:10px;padding:12px;min-height:100px;margin-bottom:10px;white-space:pre-wrap}
+.task{padding:12px;border-bottom:1px solid #293653;font-size:14px}
+footer{text-align:center;padding:25px;color:#7887a6;font-size:12px}
+@media(min-width:650px){.stats{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+<h1>🏢 My Rp AI Office</h1>
+<p>Your Virtual AI Headquarters</p>
+</header>
+<main>
+<h2>📊 Office Dashboard</h2>
+<div class="stats">
+<div class="card"><small>AI Employees</small><div class="number">5</div></div>
+<div class="card"><small>Departments</small><div class="number">4</div></div>
+<div class="card"><small>Tasks Created</small><div class="number" id="count">0</div></div>
+<div class="card"><small>Office Status</small><div class="number" style="font-size:19px;color:#58dda1">ONLINE</div></div>
+</div>
+
+<h2>👥 Our AI Employees</h2>
+<div class="grid">
+<div class="card employee"><div class="avatar">👔</div><h3>AI Boss</h3><small>Chief Manager</small><p class="status">● Available</p></div>
+<div class="card employee"><div class="avatar">📱</div><h3>Facebook Manager</h3><small>Social Media</small><p class="status">● Available</p></div>
+<div class="card employee"><div class="avatar">🔎</div><h3>Researcher</h3><small>Research Department</small><p class="status">● Available</p></div>
+<div class="card employee"><div class="avatar">✍️</div><h3>Content Creator</h3><small>Writing Department</small><p class="status">● Available</p></div>
+<div class="card employee"><div class="avatar">📋</div><h3>Secretary</h3><small>Office Administration</small><p class="status">● Available</p></div>
+</div>
+
+<h2>🧠 AI Boss Command Center</h2>
+<div class="card">
+<p><small>Give your AI office a task:</small></p>
+<input id="command" placeholder="Example: Create a Facebook post about technology">
+<button onclick="sendTask()">Assign Task</button>
+<div style="margin-top:15px"><small>Office Activity</small></div>
+<div class="chat" id="activity">Welcome to My Rp AI Office!
+Your virtual office is ready.</div>
+</div>
+
+<h2>📝 Task Manager</h2>
+<div class="card" id="tasks">
+<div class="task">No tasks yet. Assign your first task!</div>
+</div>
+</main>
+<footer>My Rp AI Office © 2026 | AI Headquarters</footer>
+
+<script>
+let total=0;
+function sendTask(){
+let field=document.getElementById('command');
+let task=field.value.trim();
+if(!task){alert('Please enter a task first.');return;}
+total++;
+document.getElementById('count').textContent=total;
+document.getElementById('activity').textContent=
+'📩 New task received!\n\n'+task+
+'\n\n⏳ Task saved in your office task manager.\nAI automation is not connected yet.';
+let box=document.getElementById('tasks');
+if(total===1)box.innerHTML='';
+let item=document.createElement('div');
+item.className='task';
+item.textContent='📌 '+task+' — Pending';
+box.prepend(item);
+field.value='';
+}
+</script>
+</body>
+  </html>
+  
